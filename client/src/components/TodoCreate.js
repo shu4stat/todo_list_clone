@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 function TodoCreate({ onCreate }) {
-  const [todo_content, SetContent] = useState(null);
+  const [todo_content, SetContent] = useState("");
   const handleChange = (event) => {
     SetContent(event.target.value);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    onCreate(event.target.value);
+    onCreate(todo_content);
   };
   return (
     <div>
