@@ -30,13 +30,16 @@ app.post("/createTodo", async (req, res) => {
   const newTodo = new TodoModel(todo);
   await newTodo.save();
   res.json(todo);
-  console.log(todo);
+  // console.log(todo);
 });
 
 app.post("/CompleteTodo", async (req, res) => {
   const todo = req.body;
-  TodoModel.findOneAndUpdate({ _id: todo.id }, { status: todo.status });
+  // console.log(todo);
+  await TodoModel.findOneAndUpdate({ _id: todo.id }, { status: todo.status });
+  res.end();
 });
+
 app.get("/getTodos", async (req, res) => {
   await ConnectPromise;
   let todoPromise = TodoModel.find({});
@@ -48,6 +51,12 @@ app.get("/getTodos", async (req, res) => {
       console.log(err);
       res.json();
     });
+});
+
+app.delete("/DeleteTodo", async (req, res) => {
+  const todo = req.body;
+  await TodoModel.deleteOne({ id: todo.id });
+  res.end();
 });
 
 app.listen(3001, () => {

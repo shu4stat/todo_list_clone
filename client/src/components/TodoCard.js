@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-function TodoCard({ item, OnComplete }) {
-  const [status, SetStatus] = useState("");
+function TodoCard({ item, OnComplete, OnDelete }) {
   const handleComplete = (event) => {
     // const element = document.getElementById("button_complete");
     // element.style.textDecoration = "line-through";
-    SetStatus("complete");
+    // SetStatus("completed");
+    // console.log(`status inside TodoCard is ${status}`);
+    const status = "completed";
     OnComplete(item._id, status);
+  };
+  const handleDelete = (event) => {
+    OnDelete(item._id);
   };
   return (
     <div>
       {item.content}
       <div>
-        <button id="button_complete" onClick={handleComplete}>
-          Complete
-        </button>
-        <button>Delete</button>
+        <button onClick={handleComplete}>Complete</button>
+        <button onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );

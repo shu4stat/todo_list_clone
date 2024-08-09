@@ -2,14 +2,16 @@ import { useState } from "react";
 
 function TodoCreate({ onCreate }) {
   const [todo_content, SetContent] = useState("");
-  const [todo_status, SetStatus] = useState("");
+  // const [todo_status, SetStatus] = useState("");
+  // console.log(`initialization state ${todo_content}`);
   const handleChange = (event) => {
     SetContent(event.target.value);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    SetStatus("in progress");
-    onCreate(todo_content, todo_status);
+    // SetStatus("in progress");
+    const status = "in progress";
+    onCreate(todo_content, status);
   };
   return (
     <div>

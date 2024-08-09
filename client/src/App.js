@@ -5,18 +5,17 @@ import Axios from "axios";
 
 function App() {
   const [todo_list, SetTodoList] = useState([]);
-  // const [status, SetStatus] = useState("");
-  const [create_status, SetCreateStatus] = useState("");
+  const [change_status, SetChangeStatus] = useState("");
 
   useEffect(() => {
     Axios.get("http://localhost:3001/getTodos").then((response) => {
       SetTodoList(response.data);
       console.log("useEffect run");
+      SetChangeStatus("");
     });
-  }, [create_status]);
+  }, [change_status]);
 
   const CreateTodo = (content, status) => {
-    // SetStatus("in progress");
     // console.log(status);
     Axios.post("http://localhost:3001/createTodo", {
       content,
@@ -25,23 +24,34 @@ function App() {
       // console.log(response);
       alert("Todo Created");
       // SetTodoList([...todo_list, { content, status }]);
-      SetCreateStatus("created");
+      SetChangeStatus("created");
     });
   };
-  const CompleteTodo = (id, newstatus) => {
+
+  const DeleteTodo = (id) => {
+    Axios.delete("http://localhost:3001/DeleteTodo", { id }).then(
+      (response) => {
+        alert("Todo Deleted");
+        SetChangeStatus("deleted");
+        todo_list.filter((id) => todo_list._id !== id);
+        // console.log(todo_list);
+      }
+    );
+  };
+  const CompleteTodo = (id, status) => {
     const updateTodolist = todo_list.map((item) => {
       if (item._id === id) {
-        return { ...item, status: newstatus };
+        return { ...item, status: "completed" };
       }
       return item;
     });
     SetTodoList(updateTodolist);
-    console.log(updateTodolist);
+    // console.log(status);
     Axios.post("http://localhost:3001/CompleteTodo", {
       id,
-      newstatus,
+      status,
     }).then((response) => {
-      alert("Status Changed");
+      alert("Todo Completed");
     });
   };
   return (
@@ -53,6 +63,7 @@ function App() {
             key={todo_item._id}
             item={todo_item}
             OnComplete={CompleteTodo}
+            OnDelete={DeleteTodo}
           />
         );
       })}
