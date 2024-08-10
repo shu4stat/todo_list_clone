@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import "./Complete.css";
+import "./styles.css";
 
 function TodoCard({ item, OnComplete, OnDelete, OnUncomplete, isComplete }) {
   // const handleComplete = (event) => {
