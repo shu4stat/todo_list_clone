@@ -41,7 +41,7 @@ function App() {
   const CompleteTodo = (id, status) => {
     const updateTodolist = todo_list.map((item) => {
       if (item._id === id) {
-        return { ...item, status: "completed" };
+        return { ...item, status: true };
       }
       return item;
     });
@@ -51,7 +51,23 @@ function App() {
       id,
       status,
     }).then((response) => {
-      alert("Todo Completed");
+      // alert("Todo Completed");
+    });
+  };
+  const UncompleteTodo = (id, status) => {
+    const updateTodolist = todo_list.map((item) => {
+      if (item._id === id) {
+        return { ...item, status: false };
+      }
+      return item;
+    });
+    SetTodoList(updateTodolist);
+    // console.log(status);
+    Axios.post("http://localhost:3001/CompleteTodo", {
+      id,
+      status,
+    }).then((response) => {
+      // alert("Todo Completed");
     });
   };
   return (
@@ -64,6 +80,8 @@ function App() {
             item={todo_item}
             OnComplete={CompleteTodo}
             OnDelete={DeleteTodo}
+            OnUncomplete={UncompleteTodo}
+            isComplete={todo_item.status}
           />
         );
       })}

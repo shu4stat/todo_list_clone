@@ -10,7 +10,7 @@ function TodoCreate({ onCreate }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // SetStatus("in progress");
-    const status = "in progress";
+    const status = false;
     onCreate(todo_content, status);
   };
   return (
